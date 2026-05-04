@@ -6,6 +6,7 @@ import getCroppedImageUrl from "../services/image-url";
 import { IconButton } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 import { Emoji } from "./Emoji";
+import { motion } from "framer-motion";
 
 interface Props {
   game: Game;
@@ -13,10 +14,18 @@ interface Props {
   isFavorite: boolean;
   onToggleFavorite: () => void;
 }
+const MotionBox = motion(Box);
 
 const GameCard = ({ game, onClick, isFavorite, onToggleFavorite }: Props) => {
   return (
-    <Box position="relative" onClick={onClick} cursor="pointer">
+    <MotionBox
+      position="relative"
+      onClick={onClick}
+      cursor="pointer"
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 200 }}
+    >
       <Card>
         <Image src={getCroppedImageUrl(game.background_image)}></Image>
         <CardBody>
@@ -45,7 +54,7 @@ const GameCard = ({ game, onClick, isFavorite, onToggleFavorite }: Props) => {
           </Heading>
         </CardBody>
       </Card>
-    </Box>
+    </MotionBox>
   );
 };
 
