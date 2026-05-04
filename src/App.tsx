@@ -8,6 +8,7 @@ import { PlatformSelector } from "./components/PlatformSelector";
 import { Platform } from "./hooks/useGames";
 import SortSelector from "./components/SortSelector";
 import GameHeading from "./components/GameHeading";
+import GameModal from "./components/GameModal";
 
 export interface GameQuery {
   genre: Genre | null;
@@ -18,6 +19,18 @@ export interface GameQuery {
 
 function App() {
   const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
+
+  const [selectedGame, setSelectedGame] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleGameClick = (game: any) => {
+    setSelectedGame(game);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <Grid
@@ -63,7 +76,12 @@ function App() {
             />
           </Flex>
         </Box>
-        <GameGrid gameQuery={gameQuery} />
+        <GameGrid gameQuery={gameQuery} onGameClick={handleGameClick} />
+        <GameModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          game={selectedGame}
+        />
       </GridItem>
     </Grid>
   );
