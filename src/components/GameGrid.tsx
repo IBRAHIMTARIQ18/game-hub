@@ -8,9 +8,16 @@ import { GameQuery } from "../App";
 interface Props {
   gameQuery: GameQuery;
   onGameClick: (game: any) => void;
+  favorites: number[];
+  onToggleFavorite: (id: number) => void;
 }
 
-export const GameGrid = ({ gameQuery, onGameClick }: Props) => {
+export const GameGrid = ({
+  gameQuery,
+  onGameClick,
+  favorites,
+  onToggleFavorite,
+}: Props) => {
   const { data, error, isLoading } = useGames(gameQuery);
 
   const skeletons = [1, 2, 3, 4, 5, 6];
@@ -26,7 +33,12 @@ export const GameGrid = ({ gameQuery, onGameClick }: Props) => {
         ))}
       {data.map((game) => (
         <GameCardContainer key={game.id}>
-          <GameCard game={game} onClick={() => onGameClick(game)} />
+          <GameCard
+            game={game}
+            onClick={() => onGameClick(game)}
+            isFavorite={favorites.includes(game.id)}
+            onToggleFavorite={() => onToggleFavorite(game.id)}
+          />
         </GameCardContainer>
       ))}
     </SimpleGrid>

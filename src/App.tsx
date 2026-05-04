@@ -32,6 +32,14 @@ function App() {
     setIsModalOpen(false);
   };
 
+  const [favorites, setFavorites] = useState<number[]>([]);
+
+  const toggleFavorite = (id: number) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id],
+    );
+  };
+
   return (
     <Grid
       templateAreas={{
@@ -76,7 +84,12 @@ function App() {
             />
           </Flex>
         </Box>
-        <GameGrid gameQuery={gameQuery} onGameClick={handleGameClick} />
+        <GameGrid
+          gameQuery={gameQuery}
+          onGameClick={handleGameClick}
+          favorites={favorites}
+          onToggleFavorite={toggleFavorite}
+        />
         <GameModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
