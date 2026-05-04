@@ -8,7 +8,7 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
-
+import { motion } from "framer-motion";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
@@ -26,6 +26,9 @@ const GameModal = ({ isOpen, onClose, game }: Props) => {
         color="white"
         fontSize={"large"}
         borderRadius={25}
+        as={motion.div}
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
       >
         <ModalHeader fontSize={"x-large"} textAlign={"center"}>
           {game.name}
